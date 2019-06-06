@@ -46,65 +46,18 @@ Public Class CodeAnalyzerVBAnalyzer
             Dim node As MemberNode = New MemberNode(metricsContext)
             node.Calculate(methodBlockSyntax)
 
-            Dim c As MLTool.Classifier.WekaFacade = New MLTool.Classifier.WekaFacade("D:\\dataset.arff")
-            Dim j48 As MLTool.Classifier.J48Classifier = c.BuildJ48Classifier()
+            Dim j48 As MLTool.Classifier.J48Classifier = MLTool.Classifier.ClassifierFactory.BuildJ48Classifier("D:\\dataset.arff")
 
-            Dim metricsAttributes As String = MetricsToString(node)
+            Dim metricsAttributes As String = Util.MetricsToString(node.Metrics)
             Dim result As Double = j48.ClassifyInstance(metricsAttributes)
 
-            If result = "1" Then
+            If result = 1 Then
                 Dim diag = Diagnostic.Create(Rule, methodBlockSyntax.SubOrFunctionStatement.GetLocation, methodBlockSyntax.SubOrFunctionStatement.Identifier)
                 context.ReportDiagnostic(diag)
             End If
 
-            'For Each lMetrics In node.Metrics
-            '    If lMetrics.Value > 6 Then
-            '        Dim diag = Diagnostic.Create(Rule, methodBlockSyntax.SubOrFunctionStatement.GetLocation, methodBlockSyntax.SubOrFunctionStatement.Identifier)
-            '        context.ReportDiagnostic(diag)
-            '    End If
-            'Next
         End If
 
     End Sub
 
-    Private Function MetricsToString(ByVal node As MemberNode) As String
-
-        Dim LOC As String = "0"
-        Dim NP As String = "0"
-        Dim NV As String = "0"
-        Dim CC As String = "0"
-        Dim PA As String = "0"
-        Dim AE As String = "0"
-
-        For Each lMetrics In node.Metrics
-
-            If TypeOf lMetrics Is MetricsAnalyzers.Metrics.LinesOfCodeMetric Then
-                LOC = lMetrics.Value.ToString()
-            End If
-
-            If TypeOf lMetrics Is MetricsAnalyzers.Metrics.NumberOfParametersMetric Then
-                NP = lMetrics.Value.ToString()
-            End If
-
-            If TypeOf lMetrics Is MetricsAnalyzers.Metrics.NumberOfLocalVariablesMetric Then
-                NV = lMetrics.Value.ToString()
-            End If
-
-            If TypeOf lMetrics Is MetricsAnalyzers.Metrics.CyclomaticComplexityMetric Then
-                CC = lMetrics.Value.ToString()
-            End If
-
-            If TypeOf lMetrics Is MetricsAnalyzers.Metrics.NestingDepthMetric Then
-                PA = lMetrics.Value.ToString()
-            End If
-
-            If TypeOf lMetrics Is MetricsAnalyzers.Metrics.NumberOfMethodsInvokedMetric Then
-                AE = lMetrics.Value.ToString()
-            End If
-
-        Next
-
-        Dim attrs As String = LOC & "," & NP & "," & NV & "," & CC & "," & PA & "," & AE
-        Return attrs
-    End Function
 End Class
