@@ -48,7 +48,7 @@ Public Class CodeAnalyzerVBCodeFixProvider
     Private Async Function AddSuppressMessage(ByVal document As Document, ByVal methodDeclaration As MethodBlockSyntax, ByVal cancellationToken As CancellationToken) As Task(Of Solution)
         Dim root = Await document.GetSyntaxRootAsync(cancellationToken)
 
-        Dim name = SyntaxFactory.ParseName("SuppressMessage")
+        Dim name = SyntaxFactory.ParseName("System.Diagnostics.CodeAnalysis.SuppressMessage")
         Dim arguments = SyntaxFactory.ParseArgumentList("(""Desenbahia"",""QA0001"")")
 
         Dim justification = SyntaxFactory.SimpleArgument(SyntaxFactory.NameColonEquals(SyntaxFactory.IdentifierName("Justification")),
