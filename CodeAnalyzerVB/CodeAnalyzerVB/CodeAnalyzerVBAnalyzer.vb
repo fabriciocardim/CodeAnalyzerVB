@@ -46,10 +46,20 @@ Public Class CodeAnalyzerVBAnalyzer
             Dim node As MemberNode = New MemberNode(metricsContext)
             node.Calculate(methodBlockSyntax)
 
-            Dim j48 As MLTool.Classifier.J48Classifier = MLTool.Classifier.ClassifierFactory.BuildJ48Classifier("D:\\dataset.arff")
+            'Dim j48 As MLTool.Classifier.J48Classifier = MLTool.Classifier.ClassifierFactory.BuildJ48Classifier("D:\\dataset.arff")
 
-            Dim metricsAttributes As String = Util.MetricsToString(node.Metrics)
-            Dim result As Double = j48.ClassifyInstance(metricsAttributes)
+            'Dim metricsAttributes As String = Util.MetricsToString(node.Metrics)
+            'Dim result As Double = j48.ClassifyInstance(metricsAttributes)
+
+            'If result = 1 Then
+            '    Dim diag = Diagnostic.Create(Rule, methodBlockSyntax.SubOrFunctionStatement.GetLocation, methodBlockSyntax.SubOrFunctionStatement.Identifier)
+            '    context.ReportDiagnostic(diag)
+            'End If
+
+            Dim classifier As MLTool.Classifier.BayesNetClassifier = MLTool.Classifier.ClassifierFactory.BuildBayesNetClassifier("C:\\Users\\Default\\AppData\\Local\\CodeAnalyzer\\dataset.arff")
+
+            Dim metricsattributes As String = Util.MetricsToString(node.Metrics)
+            Dim result As Double = classifier.ClassifyInstance(metricsattributes)
 
             If result = 1 Then
                 Dim diag = Diagnostic.Create(Rule, methodBlockSyntax.SubOrFunctionStatement.GetLocation, methodBlockSyntax.SubOrFunctionStatement.Identifier)

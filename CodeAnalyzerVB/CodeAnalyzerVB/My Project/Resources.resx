@@ -118,17 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AnalyzerDescription" xml:space="preserve">
-    <value>Métodos devem ser pouco complexos para facilitar a manutenibilidade do código. 
-Algumas possíveis causas que podem afetar negativamente a manutenibilidade são:
-1 - O método possui muitas linhas de código.
-2 - O método possui muitos caminhos independentes.
-3 - O método possui muitos escopos aninhados.
-
-A combinação dessas casuas podem agravar o problema.</value>
+    <value>Dívida Técnica de Código indica possíveis problemas encontrados no código-fonte que podem afetar negativamente a legibilidade do código, dificultando sua manutenção. 
+Normalmente, essa dívida pode ser identificada através da análise do código-fonte em busca de problemas relacionados a práticas de codificação incorretas.</value>
     <comment>An optional longer localizable description of the diagnostic.</comment>
   </data>
   <data name="AnalyzerMessageFormat" xml:space="preserve">
-    <value>O método '{0}' possui problemas de design que podem afetar negativamente a manutenibilidade do método.</value>
+    <value>O método '{0}' possui problemas de design que podem indicar a presença de dívida técnica de código.</value>
     <comment>The format-able message the diagnostic displays.</comment>
   </data>
   <data name="AnalyzerTitle" xml:space="preserve">
